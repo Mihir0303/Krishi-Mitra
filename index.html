@@ -1,0 +1,207 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiMitra</title>
+    <link rel="shortcut icon" href="images/farmer logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="header"> 
+        <!-- logo name  -->
+        <a href="#" class="logo"><i class="fas fa-tree"></i>KrishiMitra</a>
+
+        <div class="fas fa-bars"></div>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home">home</a></li>
+                <li><a href="#about">about us</a></li>
+                <li><a href="#team">our team</a></li>
+                <li><a href="#contact">contact us</a></li>
+            </ul>
+            <div id="google_element"></div>
+            <div class="language-selector">
+                <select id="language_selector" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="bn">Bengali</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="mr">Marathi</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="kn">Kannada</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="or">Odia</option>
+                    <option value="ur">Urdu</option>
+                    <option value="as">Assamese</option>
+                    <option value="ma">Maithili</option>
+                    <option value="sd">Sindhi</option>
+                    <option value="ne">Nepali</option>
+                    <option value="si">Sinhala</option>
+                    <option value="bh">Bhojpuri</option>
+                    <option value="ks">Kashmiri</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <!-- home -->
+
+    <section id="home" class="home">
+
+        <h1 class="banner">Grow Smart, Farm Better </h1>
+        <h2 class="slogan">Empowering Farmers with Data-Driven Crop Choices for a Greener Tomorrow</h2>
+
+        <a href="./login.html"><button>get started</button></a>
+    </section>
+
+    <!-- about -->
+
+    <section id="about" class="about">
+
+
+        <h1 class="heading">About us</h1>
+
+        <div class="row">
+
+            <div class="content">
+                <h2>Grow Smart, Farm Better</h2>
+                <p>We are a team of passionate innovators dedicated to empowering farmers with AI-driven crop recommendations.
+                     Our mission is to simplify farming decisions through real-time soil insights for better yield and sustainability.</p>
+                <a href="#"> <button class="btn">read more</button></a>
+            </div>
+
+            <div class="images">
+                <img src="./images/about.png" alt="">
+            </div>
+        </div>
+
+        <!-- team -->
+
+        <section id="team" class="team">
+
+
+            <h1 class="heading">our team</h1>
+
+            <div class="row">
+
+                <div class="card">
+
+                    <div class="images">
+                        <img src="./images/boy.png" alt="">
+                    </div>
+
+                    <div class="info">
+                        <h2>Mihir Sahu</h2>
+                        <p>Frontend Developer</p>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="images">
+                        <img src="./images/boy.png" alt="">
+                    </div>
+
+                    <div class="info">
+                        <h2>Naman Sinha</h2>
+                        <p>Backend Developer</p>
+                    </div>
+                </div>
+
+                <div class="card">
+
+                    <div class="images">
+                        <img src="./images/girl.png" alt="">
+                    </div>
+
+                    <div class="info">
+                        <h2>Muskan Kasotiya</h2>
+                        <p>Backend Developer</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact -->
+
+        <section id="contact" class="contact">
+
+            <h1 class="heading">contact us</h1>
+
+            <div class="row">
+
+                <div class="images">
+                    <img src="./images/contact.jpg" alt="">
+                </div>
+
+                <div class="form-container">
+                    <form action="">
+
+                        <div class="inputbox">
+                            <input type="text" placeholder="first Name" name="" id="">
+                            <input type="text" placeholder="last Name" name="" id="">
+                        </div>
+
+                        <input type="email" placeholder="enter your email" name="" id="">
+                        <textarea name="" placeholder="message" id="" cols="30" rows="10"></textarea>
+
+                        <input type="submit" value="send">
+                    </form>
+                </div>
+            </div>
+        </section>
+
+          
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    
+    <script src="script.js"></script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+
+    <script>
+        // Initialize Google Translate API
+        function loadGoogleTranslate() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Default language
+                includedLanguages: 'en,hi,bn,ta,te,mr,gu,kn,ml,pa,or,ur,as,ma,sd,ne,si,bh,ks', // All Indian Languages
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_element');
+        }
+
+        // Language Change Handler
+        function changeLanguage() {
+            var languageSelector = document.getElementById("language_selector");
+            var selectedLanguage = languageSelector.value;
+
+            // Change the Google Translate language dynamically
+            google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,bn,ta,te,mr,gu,kn,ml,pa,or,ur,as,ma,sd,ne,si,bh,ks',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_element');
+
+            // Trigger language change
+            var iframe = document.querySelector("iframe");
+            if (iframe) {
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                var languageSelect = iframeDoc.querySelector("select");
+                if (languageSelect) {
+                    languageSelect.value = selectedLanguage;
+                    languageSelect.dispatchEvent(new Event('change'));
+                }
+            }
+        }
+    </script>
+
+    
+</body>
+
+</html>  

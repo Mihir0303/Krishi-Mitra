@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+ :root {
+     --green: #65b741;
+     --black: #333;
+     --wight: #fff;
+ }
+
+ * {
+     font-family: "Poppins", sans-serif;
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     text-decoration: none;
+     text-transform: capitalize;
+     transition: all .2s linear;
+ }
+
+ html {
+     font-size: 62.5%;
+     overflow-x: hidden;
+ }
+
+ .heading {
+     margin: 2rem;
+     padding-top: 6rem;
+     text-decoration: underline;
+     display: inline-block;
+     font-size: 3.5rem;
+     color: var(--green);
+     position: relative;
+     letter-spacing: .2rem;
+ }
+
+
+ .btn {
+     outline: none;
+     border: none;
+     border-radius: 5rem;
+     background-color: var(--green);
+     color: var(--wight);
+     cursor: pointer;
+     height: 3.5rem;
+     width: 15rem;
+     font-size: 1.7rem;
+     box-shadow: 0 .2rem .5rem rgba(0, 0, 0, .3);
+ }
+
+ .btn:hover {
+     letter-spacing: .1rem;
+     opacity: .8;
+ }
+
+
+ .header {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+     padding: 2rem 8rem;
+     position: fixed;
+     top: 0;
+     left: 0;
+     z-index: 100;
+ }
+
+
+ .header .logo {
+     font-size: 2.5rem;
+     color: var(--wight);
+ }
+
+ .header .logo i {
+     padding: 0 .5rem;
+ }
+
+ 
+ .header .navbar ul {
+     list-style-type: none;
+     display: flex;
+     align-items: center;
+     justify-content: space-around;
+ }
+
+ .header .navbar ul li {
+     margin: 0 1.5rem;
+ }
+
+ .header .navbar ul li a {
+     font-size: 2rem;
+     color: var(--wight);
+ }
+
+ .header .fa-bars {
+     color: var(--wight);
+     cursor: pointer;
+     font-size: 3rem;
+     display: none;
+ }
+
+
+.home {
+    min-height: 100vh;
+    width: 100vw;
+    background-image: url(./images/home.jpg);
+    background-size: cover;
+    display: flex;
+    align-items: flex-start;  /* Align items to the top */
+    justify-content: space-between;  /* Distribute space between the two divs */
+    text-align: center;
+    padding: 0 1rem;
+    position: relative;
+    overflow: hidden;
+} 
+
+.pred{
+    margin-top: 120px;
+    border-radius: 20px;
+    background-color: #65b741;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    animation: fadeIn 1.5s ease-in-out; 
+}
+
+/* old */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+.container {
+    margin-top: 120px;
+    margin-left: 100px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 90%;
+    max-width: 700px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+.data {
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: #65b741;
+    color: #fff;
+    font-weight: bold;
+}
+.button {
+    background:  #65b741;
+    color:#fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+}
+.button:hover {
+    background: rgb(50, 152, 50);
+    color: #fff;
+}
+.loader {
+    display: none;
+    margin: 20px auto;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid  rgb(51, 171, 51);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+.input-field {
+    margin: 10px 0;
+}
+input[type="number"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: calc(100% - 22px);
+    font-size: 16px;
+}
+
+/* weather */
+
+.weather{
+    margin-top: 50px;
+    margin-right: 50px;
+    margin-left: 50px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+main{
+    width: 400px;
+    height: max-content;
+    min-height: 300px;
+    background-color: #65b741;
+    border-radius: 30px;
+    box-shadow: 0 30px 50px #5553;
+    padding: 30px;
+    box-sizing: border-box;
+}
+main form{
+    border: 2px solid #5552;
+    display: flex;
+    border-radius: 30px;
+    justify-content: space-between;
+}
+main form input, 
+main form button{
+    border: none;
+    background-color: wheat;
+    border-radius: 10px;
+    outline: none;
+    padding: 10px;
+    box-sizing: border-box;
+}
+main form i{
+    opacity: 0.7;
+}
+main .result{
+    padding-top: 20px;
+    text-align: center;
+}
+main .result .name{
+    font-weight: bold;
+    font-size: large;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+main .temperature img{
+    width: 150px;
+    filter: drop-shadow(0 10px 50px #555);
+}
+main .temperature figcaption{
+    font-size: 3em;
+}
+main .description{
+    padding: 10px 0 30px;
+}
+main ul{
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+main li{
+    background-color: #f78a55;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px 10px;
+    background-image: linear-gradient(
+        to bottom,
+        transparent 50%,
+        #0003 50%
+    );
+    font-weight: bold;
+    font-size: small;
+}
+main ul li i{
+    font-size: 2em;
+    margin: 20px 0;
+    display: block!important;
+}
+main li:nth-child(2){
+    background-color: #b56291;
+}
+main li:nth-child(3){
+    background-color: #48567b;
+}
+main.error{
+    animation: errorEffect 0.3s linear 1;
+}
+@keyframes errorEffect{
+    0%{
+        transform: translate(10px, 5px)
+    }
+    25%{
+        transform: translate(-5px, 0)
+    }
+    50%{
+        transform: translate(8px, 2px)
+    }
+    75%{
+        transform: translate(-2px, 5px)
+    }
+    100%{
+        transform: translate(0, 0); 
+    }
+}

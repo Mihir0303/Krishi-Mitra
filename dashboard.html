@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/farmer logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Land Information</title>
+    <link rel="stylesheet" href="dash.css">
+</head>
+
+<body>
+    <header class="header">
+        <!-- logo name  -->
+        <a href="#" class="logo"><i class="fas fa-tree"></i>KrishiMitra</a>
+
+        <div class="fas fa-bars"></div>
+
+        <nav class="navbar">
+            <ul>
+                <li><a href="#home">home</a></li>
+                <li><a href="#about">about us</a></li>
+                <li><a href="#team">our team</a></li>
+                <li><a href="#contact">contact us</a></li>
+            </ul>
+            <div id="google_element"></div>
+            <div class="language-selector">
+                <select id="language_selector" onchange="changeLanguage()">
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="bn">Bengali</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="mr">Marathi</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="kn">Kannada</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="or">Odia</option>
+                    <option value="ur">Urdu</option>
+                    <option value="as">Assamese</option>
+                    <option value="ma">Maithili</option>
+                    <option value="sd">Sindhi</option>
+                    <option value="ne">Nepali</option>
+                    <option value="si">Sinhala</option>
+                    <option value="bh">Bhojpuri</option>
+                    <option value="ks">Kashmiri</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+    <div class="home">
+        <div class="container">
+            <h1>Land Information</h1>
+            <p id="status">Click the button to fetch your land information or enter latitude and longitude manually.</p>
+            <div class="input-field">
+                <input type="number" id="latitude" placeholder="Enter Latitude" step="0.01">
+            </div>
+            <div class="input-field">
+                <input type="number" id="longitude" placeholder="Enter Longitude" step="0.01">
+            </div>
+            <button class="button" onclick="getLocation()">Get Land Data</button>
+            <div class="loader" id="loader"></div>
+            <div id="landData" style="font-size: 13px;"></div>
+        </div>
+
+
+        <!-- weather -->
+        <div class="weather">
+            <main>
+                <form>
+                    <input type="text" id="name" value="Search City" autocomplete="off">
+                    <button>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+                <section class="result">
+
+                    <figure class="name">
+                        <figcaption>London</figcaption>
+                        <img src="https://flagsapi.com/GB/shiny/32.png">
+                    </figure>
+
+                    <figure class="temperature">
+                        <img src="https://openweathermap.org/img/wn/10d@4x.png">
+                        <figcaption>
+                            <span>31</span>
+                            <sup>o</sup>
+                        </figcaption>
+                    </figure>
+                    <p class="description">overcast clouds</p>
+                    <ul>
+                        <li>
+                            <span>clouds</span>
+                            <i class="fa-solid fa-cloud"></i>
+                            <span id="clouds">98</span>%
+                        </li>
+                        <li>
+                            <span>humidity</span>
+                            <i class="fa-solid fa-droplet"></i>
+                            <span id="humidity">98</span>%
+                        </li>
+                        <li>
+                            <span>pressure</span>
+                            <i class="fa-solid fa-gauge"></i>
+                            <span id="pressure">1011</span>hPa
+                        </li>
+                    </ul>
+                </section>
+            </main>
+        </div>
+
+        <div class="pred">
+            <form id="predictForm">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" placeholder="Enter Latitude">
+
+                <br><br>
+
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" placeholder="Enter Longitude">
+                <br><br>
+
+                <button type="submit">Predict Crop</button>
+            </form>
+
+            <h2 id="result"></h2>
+        </div>
+    </div>
+
+    <script>
+
+        const landDataDiv = document.getElementById('landData');
+        const status = document.getElementById('status');
+        const loader = document.getElementById('loader');
+
+        function getLocation() {
+            const latInput = document.getElementById('latitude').value;
+            const lonInput = document.getElementById('longitude').value;
+
+            if (latInput && lonInput) {
+                // Show loader when fetching data
+                loader.style.display = "block";
+                fetchLandData({
+                    coords: {
+                        latitude: parseFloat(latInput),
+                        longitude: parseFloat(lonInput)
+                    }
+                });
+            } else if (navigator.geolocation) {
+                status.textContent = "Fetching location...";
+                loader.style.display = "block";  // Show loader during location fetching
+                navigator.geolocation.getCurrentPosition(fetchLandData, showError);
+            } else {
+                status.textContent = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        async function fetchLandData(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            status.textContent = `Location: Lat ${lat.toFixed(2)}, Lon ${lon.toFixed(2)}`;
+
+            try {
+                // Fetching data from StormGlass API (for soil moisture and temperature)
+                const stormglassResponse = await fetch(
+                    `https://api.stormglass.io/v2/bio/point?lat=${lat}&lng=${lon}&params=soilMoisture40cm,soilTemperature&start=${Math.floor(Date.now() / 1000)}&end=${Math.floor(Date.now() / 1000)}`,
+                    {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': 'ef9d57be-de41-11ef-acf2-0242ac130003-ef9d587c-de41-11ef-acf2-0242ac130003' // Replace with your Stormglass API key
+                        }
+                    }
+                );
+
+                if (!stormglassResponse.ok) {
+                    throw new Error(`Stormglass API error: ${stormglassResponse.statusText}`);
+                }
+
+                const stormglassData = await stormglassResponse.json();
+                const soilMoisture = stormglassData.hours?.[0]?.soilMoisture40cm?.noaa;
+                const soilTemperature = stormglassData.hours?.[0]?.soilTemperature?.noaa;
+
+                if (soilMoisture === undefined || soilTemperature === undefined) {
+                    throw new Error('Stormglass data is missing or incomplete.');
+                }
+
+                // Fetching nitrogen, pH, and SOC data from OpenEpi
+                const nitrogenResponse = await fetch(
+                    `https://api.openepi.io/soil/property?lat=${lat}&lon=${lon}&depths=5-15cm&properties=nitrogen&values=Q0.5`
+                );
+                if (!nitrogenResponse.ok) {
+                    throw new Error(`OpenEpi API error (Nitrogen): ${nitrogenResponse.statusText}`);
+                }
+
+                const nitrogenData = await nitrogenResponse.json();
+                const nitrogen = nitrogenData.properties?.layers?.[0]?.depths?.[0]?.values?.['Q0.5'];
+
+                const phResponse = await fetch(
+                    `https://api.openepi.io/soil/property?lat=${lat}&lon=${lon}&depths=15-30cm&properties=phh2o&values=Q0.5`
+                );
+                if (!phResponse.ok) {
+                    throw new Error(`OpenEpi API error (pH): ${phResponse.statusText}`);
+                }
+
+                const phData = await phResponse.json();
+                const ph = phData.properties?.layers?.[0]?.depths?.[0]?.values?.['Q0.5'];
+
+                const socResponse = await fetch(
+                    `https://api.openepi.io/soil/property?lat=${lat}&lon=${lon}&depths=5-15cm&properties=soc&values=Q0.5`
+                );
+                if (!socResponse.ok) {
+                    throw new Error(`OpenEpi API error (SOC): ${socResponse.statusText}`);
+                }
+
+                const socData = await socResponse.json();
+                const soc = socData.properties?.layers?.[0]?.depths?.[0]?.values?.['Q0.5'];
+
+                if (nitrogen === undefined || ph === undefined || soc === undefined) {
+                    throw new Error('OpenEpi data is missing or incomplete.');
+                }
+
+                // Hide the loader after data is successfully fetched
+                loader.style.display = "none";
+
+                // Display the data in the UI
+                landDataDiv.innerHTML = `
+            <div class="data">Soil Moisture: ${(soilMoisture * 100).toFixed(2)}%</div>
+            <div class="data">Soil Temperature: ${soilTemperature.toFixed(2)}°C</div>
+            <div class="data">Nitrogen: ${nitrogen} cg/kg</div>
+            <div class="data">pH: ${(ph / 10).toFixed(2)}</div>
+            <div class="data">SOC: ${soc} dg/kg</div>
+        `;
+            } catch (error) {
+                // Hide the loader in case of an error
+                loader.style.display = "none";
+                landDataDiv.innerHTML = `<p class="data">Error fetching land data: ${error.message}</p>`;
+            }
+        }
+
+        function showError(error) {
+            loader.style.display = "none";  // Hide loader on error
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    status.textContent = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    status.textContent = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    status.textContent = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    status.textContent = "An unknown error occurred.";
+                    break;
+            }
+        }
+
+
+    </script>
+    <script src="./weather.js"></script>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+
+    <script>
+        // Initialize Google Translate API
+        function loadGoogleTranslate() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Default language
+                includedLanguages: 'en,hi,bn,ta,te,mr,gu,kn,ml,pa,or,ur,as,ma,sd,ne,si,bh,ks', // All Indian Languages
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_element');
+        }
+
+        // Language Change Handler
+        function changeLanguage() {
+            var languageSelector = document.getElementById("language_selector");
+            var selectedLanguage = languageSelector.value;
+
+            // Change the Google Translate language dynamically
+            google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,bn,ta,te,mr,gu,kn,ml,pa,or,ur,as,ma,sd,ne,si,bh,ks',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_element');
+
+            // Trigger language change
+            var iframe = document.querySelector("iframe");
+            if (iframe) {
+                var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                var languageSelect = iframeDoc.querySelector("select");
+                if (languageSelect) {
+                    languageSelect.value = selectedLanguage;
+                    languageSelect.dispatchEvent(new Event('change'));
+                }
+            }
+        }
+    </script>
+
+    <script src="./model.js"></script>
+
+</body>
+
+</html>
